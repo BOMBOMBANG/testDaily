@@ -4,30 +4,33 @@ class MyPromise {
     this.value = null
     this.callBacks = []
     fn(
-      (response) => {
-        this.state = "fulfilled"
-        this.callBackHandle(response)
+      res => {
+        this.state = "fulFilled"
+        this.thenHandle(res)
       },
-      (error) => {
+      err => {
         this.state = "rejected"
-        this.callBackHandle(error)
+        this.thenHandle(err)
       }
     )
   }
 
   then(onFulfilled, onRejected) {
     return new MyPromise((resolve, reject) => {
+      const defaultCb = () => {
+        return this.value
+      }
       this._handle({
-        onFulfilled: onFulfilled || (() => { return this.value }),
-        onRejected: onRejected || (() => { return this.value }),
+        onFulfilled: onFulfilled || defaultCb, 
+        onRejected: onRejected || defaultCb,
         resolve,
         reject
       })
     })
   }
 
-  catch(reject) {
-    return this.then(null, reject)
+  catch(onRejected) {
+    return this.then(null, onRejected)
   }
 
   finally(cb) {
@@ -35,25 +38,32 @@ class MyPromise {
   }
 
   _handle(cb) {
-    const errorHandle = (e) => {
-      cb.reject(e || cb.onRejected(this.value))
+    const handleError = (e) => {
+      cb.reject(e || cb.onRejected(this.value) || this.value)
     }
-    if(this.state === "pending") {
-      this.callBacks.push(cb)
-    }
-    else if(this.state === "fulfilled") {
-      try {
-        cb.resolve(cb.onFulfilled(this.value))
-      }catch(e) {
-        errorHandle(e)
+    const
+      pending = () => {
+        this.callBacks.push(cb)
+      },
+      fulFilled = () => {
+        try {
+          cb.resolve(cb.onFulfilled(this.value) || this.value)
+        } catch (e) {
+          handleError(e)
+        }
+      },
+      rejected = () => {
+        handleError()
       }
+    const delMap = {
+      pending,
+      fulFilled,
+      rejected
     }
-    else {
-      errorHandle()
-    }
+    delMap[this.state]()
   }
 
-  callBackHandle(value) {
+  thenHandle(value) {
     this.value = value
     this.callBacks.forEach(i => {
       this._handle(i)
@@ -61,25 +71,28 @@ class MyPromise {
   }
 }
 
+
 const p = new MyPromise((res, rej) => {
   setTimeout(() => {
-    res(1)
-  },1000)
+    rej(1)
+  }, 1000)
 })
 
 p.then((res) => {
   console.log(res);
-  return res+1
+  return res + 1
+}).catch((res) => {
+  console.log(res);
+  return res + 1
 }).then((res) => {
   console.log(res);
-  return res+1
+  return res + 1
 }).then((res) => {
   console.log(res);
-  return res+1
+  return res + 1
 }).then((res) => {
   console.log(res);
-  return res+1
-}).then((res) => {
-  console.log(res);
-  return res+1
+  return res + 1
+}).finally(() => {
+  console.log("finally");
 })
