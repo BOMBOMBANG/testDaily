@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.entity = void 0;
 var entity;
 (function (entity) {
     var login = /** @class */ (function () {
@@ -10,4 +12,4 @@ var entity;
         return login;
     }());
     entity.login = login;
-})(entity || (entity = {}));
+})(entity = exports.entity || (exports.entity = {}));

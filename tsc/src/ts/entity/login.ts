@@ -1,4 +1,4 @@
-namespace entity {
+export namespace entity {
   export class login {
     static url = "/login"
     nickname: string
