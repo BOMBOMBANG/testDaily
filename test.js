@@ -40,7 +40,7 @@
 //   else {
 //     const children = arr.filter(i => i.pid===node.id)
 //     const other = arr.filter(i => i.id!==node.pid)
-//     ifchildren.length) node.children = children
+//     if(children.length) node.children = children
 //     if(children.length> 0 && other.length>0) {
 //       for (const item of children) {
 //         test(other, item)
@@ -88,7 +88,7 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 // function sortArr(arr) {
   // if (arr.length <= 1) { return arr; }
   // const pivotIndex = 0; // 已数组第一位为基准值
-  // const pivot = arr.splice(pivotIndex, 1)[0];//splice剔除中间值，防止判断时重复存入数组
+  // const pivot = arr.splice(pivotIndex, 1)[0];//splice剔除中间值，防止判断时重复存入数组 必须要，要不然很容易陷入死循环
   // const left = [];
   // const right = [];
   // for (var i = 0; i < arr.length; i++) {
