@@ -118,91 +118,157 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 // console.log(arr);
 */
 
-class MyPromise {
-  constructor(cb) {
-    this.callBacks = []
-    this.state = 'pending' //增加状态
-    this.value = null //保存结果
-    cb(
-      this._resolve.bind(this),
-      this._reject.bind(this)
-    )
-  }
+// class MyPromise {
+//   constructor(cb) {
+//     this.callBacks = []
+//     this.state = 'pending' //增加状态
+//     this.value = null //保存结果
+//     cb(
+//       this._resolve.bind(this),
+//       this._reject.bind(this)
+//     )
+//   }
 
-  then(onFulfilled, onReject) {
-    const defaultCb = function () { return false }
-    return new MyPromise((resolve, reject) => {
-      this._handle({
-        resolve,
-        onFulfilled: onFulfilled || defaultCb,
-        reject,
-        onReject: onReject || defaultCb,
-      })
-    })
-  }
+//   then(onFulfilled, onReject) {
+//     const defaultCb = function () { return false }
+//     return new MyPromise((resolve, reject) => {
+//       this._handle({
+//         resolve,
+//         onFulfilled: onFulfilled || defaultCb,
+//         reject,
+//         onReject: onReject || defaultCb,
+//       })
+//     })
+//   }
 
-  catch(onReject) {
-    return this.then(null, onReject)
-  }
+//   catch(onReject) {
+//     return this.then(null, onReject)
+//   }
 
-  finally(finallyCb) {
-    return this.then(finallyCb, finallyCb) // 不管成功还是失败，都做finallyCb处理
-  }
+//   finally(finallyCb) {
+//     return this.then(finallyCb, finallyCb) // 不管成功还是失败，都做finallyCb处理
+//   }
 
-  /**
-   * 用于回调成功后，实现then的链式调用
-   */
-  _handle(cb) {
-    if (this.state === 'pending') {
-      this.callBacks.push(cb)
+//   /**
+//    * 用于回调成功后，实现then的链式调用
+//    */
+//   _handle(cb) {
+//     if (this.state === 'pending') {
+//       this.callBacks.push(cb)
+//     }
+//     else if (this.state === 'fulfilled') {
+//       try {
+//         cb.resolve(cb.onFulfilled(this.value) || this.value)
+//       } catch (e) {
+//         this.state = "reject"
+//         cb.reject(e)
+//       }
+//     }
+//     else if (this.state === 'reject') {
+//       cb.reject(cb.onReject(this.value) || this.value || "your promise is rejected by an unknown error")
+//     }
+//   }
+
+//   _resolve(response) {
+//     this.state = 'fulfilled';//改变状态
+//     this.value = response;//保存结果
+//     this.callBacks.forEach(cb => {
+//       // cb(response)
+//       this._handle(cb)
+//     });
+//   }
+
+//   _reject(error) {
+//     this.state = 'reject';//改变状态
+//     this.value = error;//保存结果
+//     this.callBacks.forEach(cb => {
+//       // cb(response)
+//       this._handle(cb)
+//     });
+//   }
+
+// }
+
+// const mp = new MyPromise((resolve, rej) => {
+//   setTimeout(() => {
+//     rej(1)
+//   }, 1000);
+// })
+
+// mp
+//   .then(res => {
+//     console.log(res);
+//   })
+//   .catch(err => {
+//     console.log("err：", err);
+//     return 3
+//   })
+//   .then((res) => {
+//     console.log(res);
+//   })
+
+// 斐波那契数
+// let fibList = []
+// function fib() {
+//   let length = fibList.length
+//   if (length < 2) {
+//     fibList.push(fibList.length)
+//     length = fibList.length
+//     return fibList[length - 1]
+//   }
+//   fibList.push(fibList[length - 1] + fibList[length - 2])
+//   fibList.splice(0,1)
+//   return fibList[1]
+// }
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+// console.log(fib())
+
+
+// 找target下标
+// const target = 100,
+//       nums = [1,2,30,98,70]
+// function getIndexOfTarget(target, nums) {
+//   let indexList = []
+//   for (let i = 0; i < nums.length; i++) {
+//     const item1 = nums[i];
+//     for (let j = i; j < nums.length; j++) {
+//       const item2 = nums[j];
+//       if(item1 + item2 === target) indexList.push([i, j])
+//     }
+//   }
+//   return indexList.length ? indexList : "什么都没有"
+// }
+// console.log(getIndexOfTarget(target, nums))
+
+// 变量提升
+// var a = 10
+// function aaa() {
+//   console.log(a);
+//   var a = 100 //变量声明被提前了，但是赋值还是在这一行
+//   console.log(a);
+// }
+// aaa()
+
+// 随机数
+const arr = [1,2,3,4,45,5,6,7,8,9,10]
+function getMNums(arr) {
+  const m = Math.floor(Math.random() * arr.length) + 1,
+        savedList = []
+  for (let i = 0; i < m; ) {
+    let index = Math.floor(Math.random() * arr.length)
+    if(!savedList.includes(index)) {
+      i++
+      savedList.push(index)
     }
-    else if (this.state === 'fulfilled') {
-      try {
-        cb.resolve(cb.onFulfilled(this.value) || this.value)
-      } catch (e) {
-        this.state = "reject"
-        cb.reject(e)
-      }
-    }
-    else if (this.state === 'reject') {
-      cb.reject(cb.onReject(this.value) || this.value || "your promise is rejected by an unknown error")
-    }
   }
-
-  _resolve(response) {
-    this.state = 'fulfilled';//改变状态
-    this.value = response;//保存结果
-    this.callBacks.forEach(cb => {
-      // cb(response)
-      this._handle(cb)
-    });
-  }
-
-  _reject(error) {
-    this.state = 'reject';//改变状态
-    this.value = error;//保存结果
-    this.callBacks.forEach(cb => {
-      // cb(response)
-      this._handle(cb)
-    });
-  }
-
+  return savedList.map((i) => arr[i])
 }
-
-const mp = new MyPromise((resolve, rej) => {
-  setTimeout(() => {
-    rej(1)
-  }, 1000);
-})
-
-mp
-  .then(res => {
-    console.log(res);
-  })
-  .catch(err => {
-    console.log("err：", err);
-    return 3
-  })
-  .then((res) => {
-    console.log(res);
-  })
+console.log(getMNums(arr))
