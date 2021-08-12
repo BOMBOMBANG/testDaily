@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>testTsc</title>
+</head>
+
+<body>
+  <button id="login">登陆</button>
+  <button id="submit">提交</button> 
+  <script type="module">
+    import { addClickEvent } from "../js/utils/index.js"
+    import loginAPI from "../js/api/login.js"  // 原来的js方法
+    import submitAPI from "../js/api/submit.js" // 通过tsc编译后的方法
+
+    addClickEvent(document.getElementById("login"), () => {
+      loginAPI.login("wangyf27", 1234)
+    })
+    addClickEvent(document.getElementById("submit"), () => {
+      submitAPI.submit({ aaa: "xxxxx", b: "eeeee" })
+    })
+
+  </script>
+</body>
+
+</html>
