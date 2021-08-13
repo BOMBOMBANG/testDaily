@@ -258,17 +258,26 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 // aaa()
 
 // 随机数
-const arr = [1,2,3,4,45,5,6,7,8,9,10]
-function getMNums(arr) {
-  const m = Math.floor(Math.random() * arr.length) + 1,
-        savedList = []
-  for (let i = 0; i < m; ) {
-    let index = Math.floor(Math.random() * arr.length)
-    if(!savedList.includes(index)) {
-      i++
-      savedList.push(index)
-    }
-  }
-  return savedList.map((i) => arr[i])
-}
-console.log(getMNums(arr))
+// const arr = [1,2,3,4,45,5,6,7,8,9,10]
+// function getMNums(arr) {
+//   const m = Math.floor(Math.random() * arr.length) + 1,
+//         savedList = []
+//   for (let i = 0; i < m; ) {
+//     let index = Math.floor(Math.random() * arr.length)
+//     if(!savedList.includes(index)) {
+//       i++
+//       savedList.push(index)
+//     }
+//   }
+//   return savedList.map((i) => arr[i])
+// }
+// console.log(getMNums(arr))
+
+// 回文
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var validPalindrome = function (s) {
+  function isBackWord(stre) {}
+};
