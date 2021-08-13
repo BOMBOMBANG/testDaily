@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id=login>登陆</button>
+  <button id=submit>提交</button>
+</body>
+<script type="module">
+  import { newFunc } from "../utils/newFunc.js"
+  import loginAPI from "../api/loginAPI.js"
+  import submitAPI from "../api/submitAPI.js"
+  document.getElementById("login").addEventListener("click", () => {
+    loginAPI.login({
+      password: "123456",
+      nickname: "wangyf27"
+    })
+  })
+  document.getElementById("submit").addEventListener("click", () => {
+    // oldFunc()
+    newFunc()
+  })
+</script>
+</html>
