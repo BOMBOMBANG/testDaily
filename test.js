@@ -272,12 +272,3 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 //   return savedList.map((i) => arr[i])
 // }
 // console.log(getMNums(arr))
-
-// 回文
-/**
- * @param {string} s
- * @return {boolean}
- */
-var validPalindrome = function (s) {
-  function isBackWord(stre) {}
-};
