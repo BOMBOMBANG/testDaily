@@ -273,11 +273,188 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 // }
 // console.log(getMNums(arr))
 
-// 回文
+// // 回文
+// /**
+//  * @param {string} s
+//  * @return {boolean}
+//  */
+// var validPalindrome = function (s) {
+//   function isBackWord(str) {
+//     let left = "", right = ""
+//     if (str.length % 2 === 0) {
+//       const length = str.length / 2
+//       left = str.slice(0, length)
+//       right = str.slice(length).split("").reverse().join("")
+//     }
+//     else {
+//       const length = (str.length + 1) / 2
+//       left = str.slice(0, length - 1)
+//       right = str.slice(length).split("").reverse().join("")
+//     }
+//     return left == right
+//   }
+
+//   if (isBackWord(s)) {
+//     return true
+//   }
+//   for (let index = 0; index < s.length; index++) {
+//     let str = s.slice(0, index).concat(s.slice(index + 1))
+//     if (isBackWord(str)) {
+//       return true
+//     }
+//   }
+//   return false
+// };
+
+// 第三大的数
+// /**
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var thirdMax = function (nums) {
+//   const arr = Array.from(new Set(nums)).sort((a,b) => b - a)
+//   return arr.length >= 3 ? arr[2] : arr[0]
+// };
+// console.log(thirdMax([1,2,2,2,2,21,1,1,1,13,4,5,6]))
+
+// 二叉树两节点间的公共祖先
 /**
- * @param {string} s
- * @return {boolean}
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
  */
-var validPalindrome = function (s) {
-  function isBackWord(stre) {}
-};
+// /**
+//  * @param {TreeNode} root
+//  * @param {TreeNode} p
+//  * @param {TreeNode} q
+//  * @return {TreeNode}
+//  */
+// var lowestCommonAncestor = function (root, p, q) {
+//   function isLeft(n1, n2) {
+//     return Boolean(n2 <= n1)
+//   }
+//   for (let index = 0; index < root.length; index++) {
+//     let item = root[index]
+//     if (item && isLeft(item, p) !== isLeft(item, q)) {
+//       return item
+//     }
+//   }
+// };
+// const root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+// console.log(lowestCommonAncestor(root, p, q))
+
+// root = {
+//   val: 6,
+//   left: {
+//     val: 2
+//   },
+//   right: {
+//     val: 8,
+//     left: {
+//       value: 7
+//     },
+//     right: {
+//       value: 9
+//     }
+//   }
+// }
+
+// 出勤天数
+// 'A'：Absent，缺勤
+// 'L'：Late，迟到
+// 'P'：Present，到场
+// /**
+//  * @param {string} s
+//  * @return {boolean}
+//  */
+//  var checkRecord = function(s) {
+//   if(s.includes("LLL")) return false
+//   let countA = 0
+//   for (let index = 0; index < s.length; index++) {
+//     const item = s[index];
+//     if(item === "A") {
+//       countA++
+//       if(countA >= 2) return false
+//     }
+//   }
+//   return true
+// };
+
+// 出勤天数进阶
+/**
+ * @param {number} n
+ * @return {number}
+ */
+// var checkRecord = function(n) {
+
+// };
+
+// 计算路径
+// const conf = {
+//   a: ["c", "b"],
+//   c: ["d"],
+//   b: ["e"]
+// }
+
+// function getPaths(conf) {
+//   const paths = []
+//   const checkPath = (key, basePath = "a") => {
+//     if(!conf[key]) {
+//       paths.push(basePath)
+//     }else {
+//       for (const item of conf[key]) {
+//         checkPath(item, basePath + " -> " + item)
+//       }
+//     }
+//   }
+//   checkPath("a")
+//   return paths
+// }
+
+// getPaths(conf)
+
+// /**
+//  * @param {number} num
+//  * @return {number}
+//  */
+//  var addDigits = function(num) {
+//   let target = num.toString()
+//   const checkTarget = (target) => {
+//       if(target.length > 1) {
+//           let newTarget = 0
+//           for(let i of target) {
+//               newTarget = parseInt(i) + newTarget
+//           }
+//          return checkTarget(newTarget.toString())
+//       }else {
+//         return parseInt(target)
+//       }
+//   }
+//   return checkTarget(target)
+// };
+
+// console.log(addDigits(38));
+
+const p1 = new Promise((res) => {
+  console.log("p1");
+  res()
+}).then(() => {
+  return 1
+})
+
+const p2 = p1.then(res => {
+  console.log(res);
+  return 2
+})
+
+const p3 = p2.then(res => {
+  console.log(res);
+  return Promise.resolve("666")
+})
+
+p3.then(res => {
+  console.log(res);
+})
+console.log("test");

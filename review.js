@@ -1,73 +1,63 @@
 // class MyPromise {
 //   constructor(fn) {
-//     this.state = "pendding"
-//     this.callBacks = []
 //     this.value = null
+//     this.callBacks = []
+//     this.state = "pending"
 //     fn(
-//       resolve => { this._resolve(resolve) },
-//       reject => { this._reject(reject) }
+//       (resolve) => { this._resolve(resolve) },
+//       (reject) => { this._reject(reject) }
 //     )
 //   }
 
 //   then(onFulfilled, onRejected) {
-//     return new MyPromise((resolve, reject) => {
-//       this._handle({
-//         onFulfilled: onFulfilled || ((value) => { return value || this.value }),
-//         onRejected: onRejected || ((err) => { return err }),
+//     return new MyPromise((reject, resolve) => {
+//       this.handle({
+//         onFulfilled: onFulfilled || (() => {}),
+//         onRejected: onRejected || (() => {}),
+//         reject,
 //         resolve,
-//         reject
 //       })
 //     })
 //   }
 
-//   catch(onRejected) {
-//     return this.then(null, onRejected)
+//   catch(reject) {
+//     return this.then(null, reject)
 //   }
 
-//   finally(cb) {
-//     return this.then(cb, cb)
+//   finally(res) {
+//     return this.then(res, res)
 //   }
 
-//   _handle(cb) {
-//     const { 
-//       onFulfilled,
-//       onRejected,
-//       resolve,
-//       reject
-//     } = cb
-//     const errHandle = (err) => {
-//       reject(onRejected(err || this.value))
-//     }
-//     if(this.state === "pendding") {
-//       this.callBacks.push(cb)
+//   handle(options) {
+//     const { onFulfilled, onRejected, reject, resolve } = options
+//     if (this.state === "pending") {
+//       this.callBacks.push(options)
 //     }
 //     else if (this.state === "fulfilled") {
 //       try {
-//         resolve(onFulfilled(this.value))
-//       }catch(err) {
-//         errHandle(err)
+//         resolve(onFulfilled(this.value) || this.value)
+//       }catch(e) {
+//         this.state = "rejected"
+//         reject(e || onRejected(this.value) || this.value)
 //       }
 //     }
 //     else if (this.state === "rejected") {
-//       errHandle()
+//       reject(onRejected(this.value) || this.value)
 //     }
 //   }
 
 //   _resolve(value) {
-//     console.log("handleResove");
-//     this.state = "fulfilled"
 //     this.value = value
-//     this.callBacks.forEach(cb => {
-//       this._handle(cb)
+//     this.state = "fulfilled"
+//     this.callBacks.forEach(i => {
+//       this.handle(i)
 //     })
 //   }
-
-//   _reject(err) {
-//     console.log("errHandle", err || this.value);
+//   _reject(value) {
+//     this.value = value
 //     this.state = "rejected"
-//     this.value = err
-//     this.callBacks.forEach(cb => {
-//       this._handle(cb)
+//     this.callBacks.forEach(i => {
+//       this.handle(i)
 //     })
 //   }
 // }
@@ -80,8 +70,8 @@
 // p.then((res) => {
 //   console.log(res);
 //   return res + 1
-// }).catch((err) => {
-//   console.log('err',err);
+// }).then((err) => {
+//   console.log('err', err);
 //   return err + 1
 // }).then((res) => {
 //   console.log(res);
