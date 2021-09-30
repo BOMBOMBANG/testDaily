@@ -6,9 +6,9 @@
 function concurrent(promises, limit) {
   let pool = [] // 并发池
 
-  const createTask = (promise) => {
+  const removeTask = (promise) => {
     promise.finally(() => {
-      // console.log(pool);
+      console.log(pool);
       pool.splice(pool.indexOf(promise), 1)
     })
     return promise
@@ -17,7 +17,7 @@ function concurrent(promises, limit) {
   const race = () => {
     Promise.race(pool)
       .then((res) => {
-        // console.log(res);
+        console.log(res);
       })
       .finally(() => {
         check()
@@ -26,7 +26,7 @@ function concurrent(promises, limit) {
 
   const check = () => { // 检查并发池
     if (promises.length && pool.length < limit) {
-      pool.push(createTask(promises.shift()))
+      pool.push(removeTask(promises.shift()))
       check()
     } else {
       race()
