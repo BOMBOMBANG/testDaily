@@ -437,24 +437,66 @@ let arr = [5, 3, 67, 2, 3, 4, 6, 890, 22]
 
 // console.log(addDigits(38));
 
-const p1 = new Promise((res) => {
-  console.log("p1");
-  res()
-}).then(() => {
-  return 1
-})
+// const p1 = new Promise((res) => {
+//   console.log("p1");
+//   res()
+// }).then(() => {
+//   return 1
+// })
 
-const p2 = p1.then(res => {
-  console.log(res);
-  return 2
-})
+// const p2 = p1.then(res => {
+//   console.log(res);
+//   return 2
+// })
 
-const p3 = p2.then(res => {
-  console.log(res);
-  return Promise.resolve("666")
-})
+// const p3 = p2.then(res => {
+//   console.log(res);
+//   return Promise.resolve("666")
+// })
 
-p3.then(res => {
-  console.log(res);
-})
-console.log("test");
+// p3.then(res => {
+//   console.log(res);
+// })
+// console.log("test");
+Promise.resolve()
+  .then(() => {
+    console.log(0)
+    // return Promise.resolve(4).then((res) => {
+    //   console.log("新then1",res);
+    //   return res
+    // })
+    return Promise.resolve(4)
+    .then(res => {
+      console.log("新的then");
+      return res
+    })
+    .then(res => {
+      console.log("新的then2");
+      return res
+    })
+    .then(res => {
+      console.log("新的then3");
+      console.log(res);
+      return res
+    })
+  })
+  // .then(res => {
+  // })
+
+Promise.resolve()
+  .then(() => {
+    console.log(1)
+  })
+  .then(() => {
+    console.log(2);
+  })
+  .then(() => {
+    console.log(3);
+  })
+  .then(() => {
+    console.log(5);
+  })
+  .then(() => {
+    console.log(6);
+  })
+
